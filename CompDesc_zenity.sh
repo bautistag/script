@@ -9,24 +9,22 @@ opcion=`zenity --text "Elige una opcion" \
 
 #Funcion que comprimir
 comprimir (){
-	directorio=`zenity --forms --title="Comprimir" \
-	--text="Introduce el directorio donde se encuentra el fichero" \
-	--add-entry="Directorio"`
-	cd $directorio
-	fichero=`zenity --forms --title= "Comprimir" \
+	fichero=`zenity --forms --title="Comprimir" \
 	--text="Introduce el fichero que quieres comprimir" \
 	--add-entry="Fichero"`
+	directorio=`zenity --forms --title= "Comprimir" \
+	--text="Introduce el directorio donde se encuentra el fichero" \
+	--add-entry="Directorio"`
 
-        #cd $directorio 2>>/tmp/errores.txt
+        cd $directorio 2>>/tmp/errores.txt
 
 if [ $fichero ]
 	then
-pwd
 #	cd $directorio 2>>/tmp/errores.txt
 	tar -czvf $fichero.tgz $fichero
 
 else
-zenity --info --text="El $fichero no es un directorio y no se puede comprimir"
+zenity --info --text="El $fichero no se puede comprimir"
 fi
 }
 
