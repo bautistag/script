@@ -16,13 +16,13 @@ comprimir (){
 	echo "Introduce el directorio donde se encuentra el fichero"
 	read directorio
 
-if [ -d $fichero ]
-	then
-	cd $directorio 2>>/tmp/errores.txt
-	tar cvf $fichero.tgz $fichero
+        cd $directorio 2>>/tmp/errores.txt
 
+if [ $fichero ]
+	then
+	tar -czvf $fichero.tgz $fichero
 else
-echo "El $archivo no es un directorio y no se puede comprimir"
+echo "El $fichero no se puede comprimir"
 fi
 }
 
@@ -30,15 +30,16 @@ fi
 descomprimir (){ 
         echo "Introduce el fichero que quieres descomprimir"
 	read fichero
-	echo "Introduce el directorio donde quieres descomprimir el fichero"
+	echo "Introduce el directorio donde se encuentra el fichero"
 	read directorio
 
-if [ -f $fichero ]
+       cd $directorio 2>>/tmp/errores.txt
+
+if [ $fichero ]
 	then
-	cd $directorio 	
-	tar -xvf $fichero 
+	tar -xzvf $fichero
 else 
-echo "$archivo no es un directorio y no se puede descomprimir"
+echo "El $fichero no se puede descomprimir"
 fi
 }
 

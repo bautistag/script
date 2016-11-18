@@ -9,30 +9,43 @@ opcion=`zenity --text "Elige una opcion" \
 
 #Funcion que comprimir
 comprimir (){
-	fichero= `zenity --text= "Introduce el fichero que quieres comprimir"`
-	directorio=`zenity --text= "Introduce el directorio donde se encuentra el fichero"`
+	directorio=`zenity --forms --title="Comprimir" \
+	--text="Introduce el directorio donde se encuentra el fichero" \
+	--add-entry="Directorio"`
+	cd $directorio
+	fichero=`zenity --forms --title= "Comprimir" \
+	--text="Introduce el fichero que quieres comprimir" \
+	--add-entry="Fichero"`
 
-if [ -d $fichero ]
+        #cd $directorio 2>>/tmp/errores.txt
+
+if [ $fichero ]
 	then
-	cd $directorio 2>>/tmp/errores.txt
-	tar cvf $fichero.tgz $fichero
+pwd
+#	cd $directorio 2>>/tmp/errores.txt
+	tar -czvf $fichero.tgz $fichero
 
 else
-zenity --text= "El $archivo no es un directorio y no se puede comprimir"
+zenity --info --text="El $fichero no es un directorio y no se puede comprimir"
 fi
 }
 
 #Funcion descomprimir
 descomprimir (){ 
-        fichero= `zenity --text= "Introduce el fichero que quieres descomprimir"`
-        directorio=`zenity --text= "Introduce el directorio donde quieres descomprimir el fichero"`
+        fichero=`zenity --forms --title="Descomprimir" \
+	--text="Introduce el fichero que quieres descomprimir" \
+	--add-entry="Fichero"`
+        directorio=`zenity --forms --title="Descomprimir" \
+	--text="Introduce el directorio donde quieres descomprimir el fichero" \
+	--add-entry="Directorio"`
+      cd $directorio 2>>/tmp/errores.txt
 
-if [ -f $fichero ]
+if [ $fichero ]
 	then
-	cd $directorio 	
-	tar -xvf $fichero 
-else 
-zenity --text "$archivo no es un directorio y no se puede descomprimir"
+#	cd $directorio 2>>/tmp/errores.txt
+	tar -xzvf $fichero
+else
+zenity --info --text "El $fichero no se puede descomprimir"
 fi
 }
 
@@ -56,7 +69,6 @@ do
 	#Llamo a la funcion opciones.
 	opciones
 	else  
-	zenity --text "Elige una opcion de las anteriores"
+	zenity --info --text "Elige una opcion de las anteriores"
 	fi
-#read -p "Pulse para continuar"
 done
